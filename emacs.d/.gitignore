@@ -1,0 +1,6 @@
+*.el~
+/url
+/melpa
+/elpa
+/auto-save-list
+*.swp
