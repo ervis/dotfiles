@@ -59,11 +59,20 @@
 			   projectile
 			   clojure-mode
 			   cider))
+;; cabal install happy hasktags stylish-haskell present ghc-mod hlint hoogle structured-haskell-mode hindent
+(defvar haskell-packages '(haskell-mod hindent company-ghc shm))
+(dolist (p clojure-packages)
+  (unless (package-installed-p p)
+    (package-install p)))
+
+(dolist (p haskell-packages)
+    (unless (package-installed-p p)
+          (package-install p)))
 
 (dolist (p clojure-packages)
   (unless (package-installed-p p)
     (package-install p)))
 
 ;; Add custom themes
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-(load-theme 'dracula t)
+;;(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+;;(load-theme 'dracula t)
