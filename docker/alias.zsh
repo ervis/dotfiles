@@ -1,0 +1,1 @@
+alias dkc='docker-compose $*'
