@@ -1,13 +1,6 @@
 # dotfiles
-Dotfiles that I use
 
-Open the zsh file
+Various configurations that i use.
 
-	$ vim ~/.zshr
+There is nothing useful here, please ignore
 
-Add the following line at the end of the file:
-
-	$ . $HOME/.dotfiles/init.sh
-
-
-all *.zsh files under `profile.d` directory will be automatically sourced.
