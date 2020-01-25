@@ -4,7 +4,9 @@ sudo apt-get install -y \
 	git \
 	git-extras \
 	terminator \
-	zsh 
+	zsh \
+	curl \
+	wget
 
 
 # install ohmyzsh
