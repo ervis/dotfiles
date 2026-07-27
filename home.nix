@@ -1,5 +1,7 @@
 { config, pkgs, ... }:
-
+let
+  dotfiles = builtins.getEnv "HOME" + "/.dotfiles";
+in
 {
   home.username = "ez";
   home.homeDirectory = "/home/ez";
@@ -33,7 +35,7 @@
     enableCompletion = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
-    initExtra = ''
+    initContent = ''
       # Custom aliases
       alias ll='ls -la'
       alias la='ls -A'
@@ -48,15 +50,37 @@
   programs.starship = {
     enable = true;
     enableZshIntegration = true;
+    settings = {
+      add_newline = false;
+      format = "$directory$git_branch$git_status$cmd_duration$line_break$character";
+      character = {
+        success_symbol = "[❯](purple)";
+        error_symbol = "[❯](red)";
+      };
+      cmd_duration.format = "[$duration]($style) ";
+    };
   };
 
   programs.git = {
     enable = true;
-    # Note: set your name/email separately with:
-    # git config --global user.name "Your Name"
-    # git config --global user.email "your@email.com"
+    settings = {
+      user.name = "Ervis Zyka";
+      user.email = "erviszyka@gmail.com";
+    };
   };
 
   # Let home-manager handle some basic configs
   programs.home-manager.enable = true;
+
+  # Symlink config files to dotfiles repo (editable in place)
+  home.file.".config/nvim".source =
+    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.config/nvim";
+  home.file.".config/herdr".source =
+    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.config/herdr";
+  home.file.".claude/settings.json".source =
+    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.claude/settings.json";
+  home.file.".claude/CLAUDE.md".source =
+    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/AGENTS.md";
+  home.file.".config/opencode/AGENTS.md".source =
+    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/AGENTS.md";
 }

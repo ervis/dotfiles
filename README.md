@@ -17,7 +17,6 @@ One command to set up Node, packages, shell config, and dev tools declaratively.
    ```
 
 2. Review the config before running:
-   - Update `flake.nix`: change `"ez@thinkpad"` to match your `whoami@hostname`
    - Review `home.nix` packages list and customize as needed
 
 3. Run bootstrap (installs Nix, enables flakes, sets up home-manager):
@@ -42,9 +41,9 @@ cd ~/.dotfiles
 ./rebuild.sh
 ```
 
-Or manually with your actual username@hostname:
+Or manually:
 ```bash
-nix run home-manager/master -- switch --flake ".#$(whoami)@$(hostname)"
+nix run home-manager/master -- switch --flake .
 ```
 
 ## Adding packages
@@ -60,7 +59,7 @@ home.packages = with pkgs; [
 ];
 ```
 
-Then apply with the `nix run home-manager...` command above.
+Then apply with `./rebuild.sh`.
 
 ## Dev shells
 

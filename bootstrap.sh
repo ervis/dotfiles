@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
 set -e
 
+# Read hostname and username from environment or use defaults
+USERNAME="${USERNAME:-$(whoami)}"
+HOSTNAME="${HOSTNAME:-$(hostname)}"
+FLAKE_REF="${USERNAME}@${HOSTNAME}"
+
 echo "=== Dotfiles Bootstrap (Ubuntu with Nix) ==="
+echo "Home config: ${FLAKE_REF}"
 
 # 1. Install Nix if not already installed
 if ! command -v nix &> /dev/null; then
@@ -38,10 +44,10 @@ nix flake update
 
 # 5. Build and switch to home-manager config
 echo "Building home-manager configuration..."
-nix run home-manager/master -- switch --flake .#$(whoami)@$(hostname)
+nix run home-manager/master -- switch -b backup --flake ".#${FLAKE_REF}"
 
 echo "=== Bootstrap complete ==="
 echo "To make changes and rebuild:"
 echo "  cd ~/.dotfiles"
 echo "  edit home.nix or add packages to flake.nix"
-echo "  nix run home-manager/master -- switch --flake .#$(whoami)@$(hostname)"
+echo "  ./rebuild.sh"

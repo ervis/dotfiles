@@ -13,16 +13,17 @@
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
+      mkHomeConfig = username: home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        modules = [
+          { home.username = username; }
+          ./home.nix
+        ];
+      };
     in
     {
-      homeConfigurations = {
-        # Format: username@hostname
-        # Update this with your actual username and hostname (use `whoami` and `hostname`)
-        "ez@thinkpad" = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          modules = [ ./home.nix ];
-        };
-      };
+      homeConfigurations."ez@zbox" = mkHomeConfig "ez";
+      homeConfigurations."ez@thinkpad" = mkHomeConfig "ez";
 
       devShells.${system}.default = pkgs.mkShell {
         buildInputs = with pkgs; [
