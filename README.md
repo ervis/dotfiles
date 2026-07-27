@@ -1,6 +1,7 @@
 # dotfiles
 
 Personal development environment and app management with Nix on Ubuntu.
+One command to set up Node, packages, shell config, and dev tools declaratively.
 
 ## Prerequisites
 
@@ -9,14 +10,14 @@ Personal development environment and app management with Nix on Ubuntu.
 
 ## Fresh machine setup
 
-1. Clone the repo and run bootstrap:
+1. Clone the repo:
    ```bash
-   git clone <repo-url> ~/c/dotfiles
-   cd ~/c/dotfiles
+   git clone https://github.com/ervis/dotfiles.git ~/.dotfiles
+   cd ~/.dotfiles
    ```
 
 2. Review the config before running:
-   - Update `flake.nix`: change `"ez@thinkpad"` to match `whoami@hostname` on your machine
+   - Update `flake.nix`: change `"ez@thinkpad"` to match your `whoami@hostname`
    - Review `home.nix` packages list and customize as needed
 
 3. Run bootstrap (installs Nix, enables flakes, sets up home-manager):
@@ -25,7 +26,7 @@ Personal development environment and app management with Nix on Ubuntu.
    ```
 
 Bootstrap does:
-1. Installs Determinate Nix
+1. Installs Determinate Nix (if not present)
 2. Enables Nix Flakes in nix.conf
 3. Symlinks repo to `~/.dotfiles`
 4. Updates flake lockfile
@@ -33,15 +34,18 @@ Bootstrap does:
 
 ## Daily use
 
-After bootstrap, make changes and apply:
+After bootstrap, edit and apply:
 
 ```bash
 cd ~/.dotfiles
 # Edit home.nix or flake.nix
-nix run home-manager/master -- switch --flake .#ez@thinkpad
+./rebuild.sh
 ```
 
-(Substitute your actual `username@hostname` for `ez@thinkpad`)
+Or manually with your actual username@hostname:
+```bash
+nix run home-manager/master -- switch --flake ".#$(whoami)@$(hostname)"
+```
 
 ## Adding packages
 
