@@ -12,6 +12,8 @@ in
     nodejs
     git
     vim
+    neovim
+    emacs
     curl
     wget
     ripgrep

@@ -3,6 +3,9 @@
 Personal development environment and app management with Nix on Ubuntu.
 One command to set up Node, packages, shell config, and dev tools declaratively.
 
+Shell is zsh with oh-my-zsh, starship prompt, autosuggestions, and syntax
+highlighting, all configured via `programs.zsh` in `home.nix`.
+
 ## Prerequisites
 
 - Ubuntu (tested on 22.04+)
