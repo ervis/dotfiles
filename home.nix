@@ -20,6 +20,8 @@ in
     jq
     lazygit
     zoxide
+    gemini-cli
+    opencode
     # Add more packages here as needed
   ];
 
@@ -29,12 +31,23 @@ in
     VISUAL = "vim";
   };
 
+  # Extra directories to prepend to PATH
+  home.sessionPath = [
+    "$HOME/bin"
+    "$HOME/.local/bin"
+  ];
+
   # Programs to configure
   programs.zsh = {
     enable = true;
     enableCompletion = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
+    oh-my-zsh = {
+      enable = true;
+      plugins = [ "git" ];
+      theme = "robbyrussell";
+    };
     initContent = ''
       # Custom aliases
       alias ll='ls -la'

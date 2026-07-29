@@ -23,7 +23,6 @@
     in
     {
       homeConfigurations."ez@zbox" = mkHomeConfig "ez";
-      homeConfigurations."ez@thinkpad" = mkHomeConfig "ez";
 
       devShells.${system}.default = pkgs.mkShell {
         buildInputs = with pkgs; [
