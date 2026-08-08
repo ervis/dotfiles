@@ -1,6 +1,6 @@
 { config, pkgs, herdrPkg, ... }:
 let
-  dotfiles = builtins.getEnv "HOME" + "/.dotfiles";
+  dotfiles = config.home.homeDirectory + "/.dotfiles";
 in
 {
   home.username = "ez";
@@ -106,6 +106,8 @@ in
     config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.config/nvim";
   home.file.".config/herdr".source =
     config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.config/herdr";
+  home.file.".config/tuicr".source =
+    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.config/tuicr";
   home.file.".claude/settings.json".source =
     config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.claude/settings.json";
   home.file.".claude/CLAUDE.md".source =

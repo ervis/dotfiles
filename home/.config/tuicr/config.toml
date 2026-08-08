@@ -1,0 +1,24 @@
+theme = "catppuccin-mocha"      # or gruvbox-dark/nord-dark — pick to match your terminal theme
+diff_view = "side-by-side"      # easier to read than unified for most diffs
+ignore_whitespace = false       # keep whitespace diffs visible — see note below
+appearance = "system"
+mouse = true
+leader = ";"
+comment_vim = true               # modal editing for the comment box, matches vim keybindings elsewhere
+relative_line_numbers = false
+review_watch_interval_ms = 1000
+
+[[comment_types]]
+id = "issue"
+color = "red"
+definition = "must fix before merge"
+
+[[comment_types]]
+id = "nit"
+color = "yellow"
+definition = "optional, non-blocking"
+
+[[comment_types]]
+id = "praise"
+color = "green"
+definition = "good pattern worth calling out"
