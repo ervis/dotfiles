@@ -7,14 +7,18 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    herdr.url = "github:herdrdev/herdr";
   };
 
-  outputs = { self, nixpkgs, home-manager }:
+  outputs = { self, nixpkgs, home-manager, herdr }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
       mkHomeConfig = username: home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
+        extraSpecialArgs = {
+          herdrPkg = herdr.packages.${system}.default;
+        };
         modules = [
           { home.username = username; }
           ./home.nix

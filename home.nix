@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, herdrPkg, ... }:
 let
   dotfiles = builtins.getEnv "HOME" + "/.dotfiles";
 in
@@ -24,6 +24,8 @@ in
     zoxide
     gemini-cli
     opencode
+    tuicr
+    herdrPkg
     # Add more packages here as needed
   ];
 
@@ -50,6 +52,13 @@ in
       plugins = [ "git" ];
       theme = "robbyrussell";
     };
+    history = {
+      size = 50000;
+      save = 50000;
+      ignoreDups = true;
+      ignoreSpace = true;
+      append = true;
+    };
     initContent = ''
       # Custom aliases
       alias ll='ls -la'
@@ -60,6 +69,11 @@ in
       alias gc='git commit'
       alias gp='git push'
     '';
+  };
+
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
   };
 
   programs.starship = {
