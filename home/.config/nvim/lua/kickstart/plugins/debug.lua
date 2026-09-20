@@ -42,6 +42,7 @@ require('mason-nvim-dap').setup {
   ensure_installed = {
     -- Update this to ensure that you have the debuggers for the langs you want
     'delve',
+    'debugpy', -- Python; mason-nvim-dap wires up dap.adapters/configurations.python automatically
   },
 }
 
@@ -91,5 +92,26 @@ require('dap-go').setup {
     -- On Windows delve must be run attached or it crashes.
     -- See https://github.com/leoluz/nvim-dap-go/blob/main/README.md#configuring
     detached = vim.fn.has 'win32' == 0,
+  },
+}
+
+-- Ruby debugging via the `debug` gem's `rdbg` binary.
+-- Not Mason-managed: add `gem "debug"` to your Gemfile (or `gem install debug`)
+-- so `rdbg` is on PATH / available via `bundle exec rdbg`.
+dap.adapters.ruby = {
+  type = 'server',
+  host = '127.0.0.1',
+  port = '${port}',
+  executable = {
+    command = 'bundle',
+    args = { 'exec', 'rdbg', '-n', '--open', '--port', '${port}', '-c', '--', 'ruby', '${file}' },
+  },
+}
+dap.configurations.ruby = {
+  {
+    type = 'ruby',
+    name = 'Debug current file',
+    request = 'launch',
+    program = '${file}',
   },
 }

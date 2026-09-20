@@ -738,6 +738,8 @@ do
     -- rust_analyzer = {},
 
     pyright = {}, -- Python
+    ruff = {}, -- Python linting/formatting (fast, complements pyright's type info)
+    ruby_lsp = {}, -- Ruby
     ts_ls = {}, -- TypeScript / JavaScript
     bashls = {}, -- Bash / zsh
     nixd = {}, -- Nix; installed via nixpkgs (home.nix) rather than Mason
@@ -805,6 +807,7 @@ do
   ensure_installed = vim.tbl_filter(function(name) return name ~= 'nixd' end, ensure_installed)
   vim.list_extend(ensure_installed, {
     -- You can add other tools here that you want Mason to install
+    'rubocop', -- used by conform.nvim for ruby formatting
   })
 
   require('mason-tool-installer').setup { ensure_installed = ensure_installed }
@@ -828,7 +831,8 @@ do
       -- You can specify filetypes to autoformat on save here:
       local enabled_filetypes = {
         -- lua = true,
-        -- python = true,
+        python = true,
+        ruby = true,
       }
       if enabled_filetypes[vim.bo[bufnr].filetype] then
         return { timeout_ms = 500 }
@@ -843,10 +847,9 @@ do
     formatters_by_ft = {
       -- rust = { 'rustfmt' },
       -- Conform can also run multiple formatters sequentially
-      -- python = { "isort", "black" },
-      --
-      -- You can use 'stop_after_first' to run the first available formatter from the list
       -- javascript = { "prettierd", "prettier", stop_after_first = true },
+      python = { 'ruff_format' },
+      ruby = { 'rubocop' },
     },
   }
 
@@ -960,6 +963,7 @@ do
     'markdown_inline',
     'nix',
     'python',
+    'ruby',
     'javascript',
     'typescript',
     'tsx',
@@ -1033,7 +1037,7 @@ do
   --  Here are some example plugins that I've included in the Kickstart repository.
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
-  -- require 'kickstart.plugins.debug'
+  require 'kickstart.plugins.debug'
   -- require 'kickstart.plugins.indent_line'
   -- require 'kickstart.plugins.lint'
   -- require 'kickstart.plugins.autopairs'
