@@ -26,6 +26,8 @@ in
     opencode
     tuicr
     herdrPkg
+    nixd # Nix language server, used by Neovim (home/.config/nvim)
+    tree-sitter # CLI needed by nvim-treesitter to build some parsers (e.g. typescript, tsx)
     # Add more packages here as needed
   ];
 
