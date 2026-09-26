@@ -35,7 +35,7 @@ in
   home.sessionVariables = {
     EDITOR = "vim";
     VISUAL = "vim";
-    AGENT_NOTES_DIR = "$HOME/.agent-notes";
+    AGENT_NOTES_DIR = "$HOME/vaults/agent-notes";
   };
 
   # Extra directories to prepend to PATH
@@ -115,8 +115,6 @@ in
     config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.claude/settings.json";
   home.file.".claude/CLAUDE.md".source =
     config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/AGENTS.md";
-  home.file.".agent-notes".source =
-    config.lib.file.mkOutOfStoreSymlink "/home/ez/c/fm-vault";
   home.file.".config/opencode/AGENTS.md".source =
     config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/AGENTS.md";
   # Local dictation script, see dictation/README.md
