@@ -73,3 +73,8 @@ nix develop  # Enter shell with nodejs and other dev tools
 ```
 
 Edit `devShells.default.buildInputs` in `flake.nix` to add more tools.
+
+## Local dictation
+
+Offline speech-to-text with a Super+/ shortcut on GNOME.
+See [`dictation/README.md`](dictation/README.md) for setup.

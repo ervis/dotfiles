@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# Local dictation: run once to start recording, run again to stop, transcribe with whisper.cpp, and type the text.
+# Audio stays on this machine and the temp file is deleted right after transcription.
+# DICTATE_OUTPUT=type (default, ydotool) | clipboard (wl-copy) | print
+set -euo pipefail
+
+W="$HOME/.local/src/whisper.cpp"
+MODEL="${DICTATE_MODEL:-$W/models/ggml-base.en.bin}"
+RT="${XDG_RUNTIME_DIR:-/tmp}/dictate"
+PIDF="$RT/rec.pid"
+WAV="$RT/rec.wav"
+OUT="${DICTATE_OUTPUT:-type}"
+export YDOTOOL_SOCKET="${YDOTOOL_SOCKET:-${XDG_RUNTIME_DIR:-/tmp}/.ydotool_socket}"
+mkdir -p "$RT"
+chmod 700 "$RT"
+
+if [ -f "$PIDF" ] && kill -0 "$(cat "$PIDF")" 2>/dev/null; then
+  kill -INT "$(cat "$PIDF")" 2>/dev/null || true
+  while kill -0 "$(cat "$PIDF")" 2>/dev/null; do sleep 0.05; done
+  rm -f "$PIDF"
+  text="$("$W/build/bin/whisper-cli" -m "$MODEL" -f "$WAV" -nt -np 2>/dev/null | tr '\n' ' ' | sed 's/^ *//; s/ *$//')"
+  rm -f "$WAV"
+  # whisper emits bracketed markers such as [BLANK_AUDIO] for silence
+  case "$text" in ""|"["*"]"|"("*")") notify-send -t 1500 "dictation" "no speech detected" 2>/dev/null || true; exit 0 ;; esac
+  case "$OUT" in
+    print) printf '%s\n' "$text" ;;
+    clipboard) printf '%s' "$text" | wl-copy ;;
+    type) ydotool type --key-delay 2 -- "$text" ;;
+  esac
+else
+  rm -f "$WAV"
+  rec -q -r 16000 -c 1 -b 16 "$WAV" &
+  echo $! >"$PIDF"
+  notify-send -t 1000 "dictation" "listening" 2>/dev/null || true
+fi

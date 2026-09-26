@@ -114,4 +114,7 @@ in
     config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/AGENTS.md";
   home.file.".config/opencode/AGENTS.md".source =
     config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/AGENTS.md";
+  # Local dictation script, see dictation/README.md
+  home.file.".local/bin/dictate-toggle".source =
+    config.lib.file.mkOutOfStoreSymlink "${dotfiles}/home/.local/bin/dictate-toggle";
 }
