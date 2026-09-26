@@ -13,4 +13,6 @@
 - Apply that same high standard to engineering excellence: lint, test failures, and test flakiness.
   If you see one, even if it is not caused by what you are working on right now, still get it fixed.
 - Always use the /simple-language skill when it is present.
+- My knowledge base is the folder in $AGENT_NOTES_DIR (an Obsidian vault). When I ask you to save or copy a file to my notes or knowledge base, put it there.
+  If the variable is unset, ask first. Never overwrite an existing note without asking.
 - Before using "dynamic workflows", "ultra code" or any harness feature that immediately spawns a large swarm of subagents, always explain the tradeoffs and ask the user for explicit approval.
