@@ -63,6 +63,13 @@ in
       ignoreSpace = true;
       append = true;
     };
+    # Reload session variables in every new shell, so home.nix changes apply
+    # to new terminals without logging out. typeset -U keeps PATH free of duplicates.
+    envExtra = ''
+      typeset -U path PATH
+      unset __HM_SESS_VARS_SOURCED
+      . "${config.home.profileDirectory}/etc/profile.d/hm-session-vars.sh"
+    '';
     initContent = ''
       # Custom aliases
       alias ll='ls -la'
